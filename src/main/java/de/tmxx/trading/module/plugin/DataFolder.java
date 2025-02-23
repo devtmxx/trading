@@ -1,4 +1,4 @@
-package de.tmxx.trading.module;
+package de.tmxx.trading.module.plugin;
 
 import jakarta.inject.Qualifier;
 
@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface PluginLogger {
+public @interface DataFolder {
 }

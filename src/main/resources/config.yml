@@ -1,2 +1,22 @@
 # DO NOT TOUCH THIS!
 version: 1
+
+######################
+# Locale Configuration
+######################
+
+locales:
+  # The directory where locales are stored. By default, locales are stored within the plugins data folder, but they can
+  # exist anywhere on the machine. If the path starts with a '.' this will represent a relative path to the data folder,
+  # otherwise it will be absolute.
+  directory: './locales'
+
+  # The default locale. This is used to search for translations if there is no suitable translation in the players
+  # preferred locale.
+  default: en_US
+
+  # Lists the supported locales. If a players locale is not listed here, the translations will default to the specified
+  # default locale.
+  supported:
+    - en_US
+    - de_DE

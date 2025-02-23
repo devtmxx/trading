@@ -1,4 +1,4 @@
-package de.tmxx.trading.module;
+package de.tmxx.trading.module.plugin;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -21,10 +21,10 @@ import static de.tmxx.trading.TradingPlugin.CONFIG_VERSION;
  * @author timmauersberger
  * @version 1.0
  */
-public class TradingModule extends AbstractModule {
+public class PluginModule extends AbstractModule {
     private final JavaPlugin plugin;
 
-    public TradingModule(JavaPlugin plugin) {
+    public PluginModule(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -32,6 +32,7 @@ public class TradingModule extends AbstractModule {
     protected void configure() {
         bind(JavaPlugin.class).toInstance(plugin);
         bind(Logger.class).annotatedWith(PluginLogger.class).toInstance(plugin.getLogger());
+        bind(File.class).annotatedWith(DataFolder.class).toInstance(plugin.getDataFolder());
     }
 
     @Provides

@@ -2,7 +2,8 @@ package de.tmxx.trading;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.tmxx.trading.module.TradingModule;
+import de.tmxx.trading.module.i18n.I18nModule;
+import de.tmxx.trading.module.plugin.PluginModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -18,7 +19,10 @@ public class TradingPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Injector injector = Guice.createInjector(new TradingModule(this));
+        Injector injector = Guice.createInjector(
+                new PluginModule(this),
+                new I18nModule()
+        );
 
         core = injector.getInstance(TradingCore.class);
         core.enable();

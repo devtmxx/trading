@@ -21,10 +21,11 @@ repositories {
 
 dependencies {
     // papermc
-    compileOnly("io.papermc.paper:paper-api:1.21.4-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 
     // google guice
     compileOnly("com.google.inject:guice:7.0.0")
+    compileOnly("com.google.inject.extensions:guice-assistedinject:7.0.0")
 
     // vault
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
