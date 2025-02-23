@@ -13,11 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @version 1.0
  */
 public class TradingPlugin extends JavaPlugin {
+    public static final int CONFIG_VERSION = 1;
     private TradingCore core = null;
 
     @Override
     public void onEnable() {
-        Injector injector = Guice.createInjector(new TradingModule());
+        Injector injector = Guice.createInjector(new TradingModule(this));
 
         core = injector.getInstance(TradingCore.class);
         core.enable();
