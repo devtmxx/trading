@@ -1,0 +1,7 @@
+name: Trading
+version: 1.0.0
+main: de.tmxx.trading.TradingPlugin
+description: A trading plugin that enables players to trade safely with other players
+author: tmxx
+api-version: '1.21.4'
+depend: [Vault]
