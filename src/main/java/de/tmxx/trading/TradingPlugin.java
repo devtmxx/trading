@@ -2,8 +2,10 @@ package de.tmxx.trading;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import de.tmxx.trading.module.helper.HelperModule;
 import de.tmxx.trading.module.i18n.I18nModule;
 import de.tmxx.trading.module.plugin.PluginModule;
+import de.tmxx.trading.module.user.UserModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -15,16 +17,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TradingPlugin extends JavaPlugin {
     public static final int CONFIG_VERSION = 1;
+    private static Injector unsafe;
+
     private TradingCore core = null;
 
     @Override
     public void onEnable() {
-        Injector injector = Guice.createInjector(
+        unsafe = Guice.createInjector(
                 new PluginModule(this),
-                new I18nModule()
+                new I18nModule(),
+                new UserModule(),
+                new HelperModule()
         );
 
-        core = injector.getInstance(TradingCore.class);
+        core = unsafe.getInstance(TradingCore.class);
         core.enable();
     }
 
@@ -34,5 +40,9 @@ public class TradingPlugin extends JavaPlugin {
         if (core == null) return;
 
         core.disable();
+    }
+
+    public static Injector unsafe() {
+        return unsafe;
     }
 }
