@@ -1,1 +1,8 @@
 prefix: '<green><bold>TRADING<reset>:'
+
+command:
+  trade:
+    help: '%prefix% Please specify the <red>name <white>of the player with whom you want to start a trade.'
+    no-self-trade: "%prefix% You <red>can't <white>trade with yourself."
+    not-found: '%prefix% The specified player is <red>offline<white>.'
+    no-trading-with-matching-ip: '%prefix% You are currently <red>not <white>allowed to start a trade with this player. Please contact the server team if you think that this is an error.'

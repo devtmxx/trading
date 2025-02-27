@@ -3,7 +3,9 @@ package de.tmxx.trading.module.helper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import de.tmxx.trading.helper.CommandHelper;
 import de.tmxx.trading.helper.ListenerHelper;
+import de.tmxx.trading.helper.impl.CommandHelperImpl;
 import de.tmxx.trading.helper.impl.ListenerHelperImpl;
 import de.tmxx.trading.module.plugin.PluginLogger;
 import net.milkbowl.vault.economy.Economy;
@@ -23,6 +25,7 @@ public class HelperModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ListenerHelper.class).to(ListenerHelperImpl.class);
+        bind(CommandHelper.class).to(CommandHelperImpl.class);
     }
 
     @Provides

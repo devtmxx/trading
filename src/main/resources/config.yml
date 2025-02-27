@@ -20,3 +20,20 @@ locales:
   supported:
     - en_US
     - de_DE
+
+#######################
+# Trading Configuration
+#######################
+
+# Disables trading for players with matching IPs. This may prevent fraud by players trading with alt-accounts.
+# Default value: true
+no-trading-with-matching-ip: true
+
+command:
+
+  # Change the name of the trade command. This is the command players use to start a trade.
+  name: trade
+
+  # Add aliases for the trade command.
+  aliases:
+    - 'trading'

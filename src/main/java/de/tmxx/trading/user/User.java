@@ -17,6 +17,7 @@ public interface User {
     Player getPlayer();
     String getName();
     UUID getUniqueId();
+    String getIp();
     void sendMessage(String key, Object... args);
     Component translate(String key, Object... args);
     List<Component> translateLore(String key, Object... args);

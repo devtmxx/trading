@@ -7,6 +7,7 @@ import de.tmxx.trading.user.User;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +41,14 @@ public class UserImpl implements User {
     @Override
     public UUID getUniqueId() {
         return player.getUniqueId();
+    }
+
+    @Override
+    public String getIp() {
+        InetSocketAddress address = player.getAddress();
+        if (address == null) return "";
+
+        return address.getAddress().getHostAddress();
     }
 
     @Override

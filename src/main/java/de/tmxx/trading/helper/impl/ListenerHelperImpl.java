@@ -28,7 +28,7 @@ public class ListenerHelperImpl implements ListenerHelper {
     }
 
     @Override
-    public void register() {
+    public void registerListeners() {
         try {
             ClassPath.from(getClass().getClassLoader()).getTopLevelClassesRecursive(LISTENER_PACKAGE).forEach(classInfo -> {
                 Class<?> clazz = classInfo.load();

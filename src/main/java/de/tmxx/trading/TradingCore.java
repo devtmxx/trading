@@ -2,7 +2,9 @@ package de.tmxx.trading;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.tmxx.trading.helper.CommandHelper;
 import de.tmxx.trading.helper.ListenerHelper;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Project: trading
@@ -14,14 +16,17 @@ import de.tmxx.trading.helper.ListenerHelper;
 @Singleton
 public class TradingCore {
     private final ListenerHelper listenerHelper;
+    private final CommandHelper commandHelper;
 
     @Inject
-    TradingCore(ListenerHelper listenerHelper) {
+    TradingCore(ListenerHelper listenerHelper, CommandHelper commandHelper) {
         this.listenerHelper = listenerHelper;
+        this.commandHelper = commandHelper;
     }
 
     public void enable() {
-        listenerHelper.register();
+        listenerHelper.registerListeners();
+        commandHelper.registerCommands();
     }
 
     public void disable() {
