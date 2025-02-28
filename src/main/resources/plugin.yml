@@ -5,3 +5,7 @@ description: A trading plugin that enables players to trade safely with other pl
 author: tmxx
 api-version: '1.21.4'
 depend: [Vault]
+
+libraries:
+  - com.google.inject:guice:7.0.0
+  - com.google.inject.extensions:guice-assistedinject:7.0.0

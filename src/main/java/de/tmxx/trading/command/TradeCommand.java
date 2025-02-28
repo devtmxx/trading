@@ -5,6 +5,7 @@ import de.tmxx.trading.module.plugin.MainConfig;
 import de.tmxx.trading.user.User;
 import de.tmxx.trading.user.UserRegistry;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -20,6 +21,8 @@ import java.util.List;
  * @version 1.0
  */
 public class TradeCommand implements PluginCommand {
+    private static final String ACCEPT_COMMAND = "/accepttrade %s";
+
     private final String name;
     private final List<String> aliases = new ArrayList<>();
     private final FileConfiguration config;
@@ -78,6 +81,29 @@ public class TradeCommand implements PluginCommand {
             return;
         }
 
-        // TODO: start the actual trading
+        if (target.hasRequest(user)) {
+            user.sendMessage("command.trade.already-invited");
+            return;
+        }
+
+        if (user.hasRequest(target)) {
+            Bukkit.dispatchCommand(user.getPlayer(), ACCEPT_COMMAND.formatted(target.getName()));
+            return;
+        }
+
+        target.addRequest(user);
+
+        user.sendMessage("command.trade.sent", target.getName());
+        target.sendMessage("command.trade.received", user.getName());
+    }
+
+    @Override
+    public Collection<String> suggest(CommandSourceStack stack, String[] args) {
+        if (!(stack.getSender() instanceof Player player)) return List.of();
+
+        return Bukkit.getOnlinePlayers().stream()
+                .filter(online -> online.canSee(player) && !online.equals(player))
+                .map(Player::getName)
+                .toList();
     }
 }

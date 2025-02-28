@@ -6,3 +6,10 @@ command:
     no-self-trade: "%prefix% You <red>can't <white>trade with yourself."
     not-found: '%prefix% The specified player is <red>offline<white>.'
     no-trading-with-matching-ip: '%prefix% You are currently <red>not <white>allowed to start a trade with this player. Please contact the server team if you think that this is an error.'
+    already-invited: '%prefix% You already sent a <red>trade request <white>to this player.'
+    sent: '%prefix% You sent a <green>trade request <white>to <yellow>{0}<white>.'
+    received: '%prefix% You received a <green>trade request <white>from <yellow>{0}<white>.<newline>%prefix% Click <gold><bold><click:run_command:"/accepttrade {0}">HERE</click></bold> <white>to start the trade.'
+  accepttrade:
+    help: '%prefix% Please specify the <red>name <white>of the player you want to accept the <green>trade request <white>from.'
+    not-found: '%prefix% The specified player is <red>offline<white>.'
+    no-invitation: '%prefix% This player <red>did not <white>sent a trade request or it <red>expired<white>.'

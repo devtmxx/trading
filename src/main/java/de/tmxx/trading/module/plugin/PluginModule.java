@@ -3,10 +3,7 @@ package de.tmxx.trading.module.plugin;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -33,14 +30,6 @@ public class PluginModule extends AbstractModule {
         bind(JavaPlugin.class).toInstance(plugin);
         bind(Logger.class).annotatedWith(PluginLogger.class).toInstance(plugin.getLogger());
         bind(File.class).annotatedWith(DataFolder.class).toInstance(plugin.getDataFolder());
-    }
-
-    @Provides
-    @Singleton
-    Economy provideEconomy() {
-        RegisteredServiceProvider<Economy> provider = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-        if (provider == null) return null;
-        return provider.getProvider();
     }
 
     @Provides

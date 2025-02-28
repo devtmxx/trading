@@ -28,7 +28,9 @@ dependencies {
     compileOnly("com.google.inject.extensions:guice-assistedinject:7.0.0")
 
     // vault
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
+        exclude("org.bukkit", "bukkit")
+    }
 }
 
 java {

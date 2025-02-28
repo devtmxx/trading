@@ -21,4 +21,8 @@ public interface User {
     void sendMessage(String key, Object... args);
     Component translate(String key, Object... args);
     List<Component> translateLore(String key, Object... args);
+
+    void addRequest(User requestedUser);
+    boolean hasRequest(User requestedUser);
+    void invalidateRequest(User requestedUser);
 }
