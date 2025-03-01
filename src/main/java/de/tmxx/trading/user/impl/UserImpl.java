@@ -7,6 +7,7 @@ import de.tmxx.trading.trade.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -110,6 +111,22 @@ public class UserImpl implements User {
     @Override
     public void setTradeContents(ItemStack[] contents) {
         currentTradeContents = contents;
+    }
+
+    @Override
+    public void returnItems() {
+        for (int i = 0; i < currentTradeContents.length; i++) {
+            ItemStack itemStack = currentTradeContents[i];
+
+            if (itemStack == null || itemStack.isEmpty()) continue;
+
+            // add items to the players inventory and drop all items which didn't fit
+            player.getInventory().addItem(itemStack)
+                    .values()
+                    .forEach(toDrop -> player.getWorld().dropItem(player.getLocation(), toDrop));
+
+            currentTradeContents[i] = null;
+        }
     }
 
     @Override

@@ -3,7 +3,10 @@ package de.tmxx.trading.trade.impl;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.tmxx.trading.trade.Trade;
+import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
+
+import java.util.function.Consumer;
 
 /**
  * Project: trading
@@ -33,6 +36,18 @@ public class TradeImpl implements Trade {
     }
 
     @Override
+    public void cancel(User cancelledBy) {
+        forBoth(user -> {
+            user.sendMessage("trade-cancelled", cancelledBy.getName());
+            user.getPlayer().closeInventory();
+            user.setInventory(null);
+            user.setTradingState(TradingState.TRADING);
+            user.resetCurrentBid();
+            user.returnItems();
+        });
+    }
+
+    @Override
     public User getPartner(User user) {
         return user.equals(initiator) ? partner : initiator;
     }
@@ -50,5 +65,10 @@ public class TradeImpl implements Trade {
     @Override
     public int getCountdown() {
         return countdown;
+    }
+
+    private void forBoth(Consumer<User> action) {
+        action.accept(initiator);
+        action.accept(partner);
     }
 }

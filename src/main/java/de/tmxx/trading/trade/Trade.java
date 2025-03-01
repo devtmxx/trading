@@ -11,6 +11,7 @@ import de.tmxx.trading.user.User;
  */
 public interface Trade {
     void start();
+    void cancel(User cancelledBy);
     User getPartner(User user);
 
     void resetCountdown();

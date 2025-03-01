@@ -2,7 +2,6 @@ package de.tmxx.trading.trade.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.tmxx.trading.i18n.I18n;
 import de.tmxx.trading.trade.Trade;
 import de.tmxx.trading.trade.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
@@ -11,9 +10,14 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -34,16 +39,14 @@ import java.util.stream.Collectors;
  */
 public class TradeInventoryImpl implements TradeInventory, InventoryHolder, Listener {
     private final JavaPlugin plugin;
-    private final I18n i18n;
     private final Trade trade;
     private final User user;
 
     private Inventory inventory = null;
 
     @Inject
-    TradeInventoryImpl(JavaPlugin plugin, I18n i18n, @Assisted Trade trade, @Assisted User user) {
+    TradeInventoryImpl(JavaPlugin plugin, @Assisted Trade trade, @Assisted User user) {
         this.plugin = plugin;
-        this.i18n = i18n;
         this.trade = trade;
         this.user = user;
     }
@@ -56,7 +59,59 @@ public class TradeInventoryImpl implements TradeInventory, InventoryHolder, List
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getClickedInventory() == null) return;
+        if (event.getInventory().getHolder(false) != this) return;
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+        if (!player.getUniqueId().equals(user.getUniqueId())) return;
 
+        if (!ALLOWED_ACTIONS.contains(event.getAction())) {
+            event.setResult(Event.Result.DENY);
+            return;
+        }
+
+        // allow all clicks in the players own inventory
+        if (event.getClickedInventory().equals(event.getView().getBottomInventory())) return;
+
+        if (!ALLOWED_SLOTS_TO_MOVE.contains(event.getRawSlot())) {
+            event.setResult(Event.Result.DENY);
+            // TODO: perform action
+            return;
+        }
+
+        updateOwnItems();
+        update();
+        updatePartnerInventory();
+        registerEdit();
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (!event.getPlayer().getUniqueId().equals(user.getUniqueId())) return;
+
+        trade.cancel(user);
+        HandlerList.unregisterAll(this);
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        if (!event.getPlayer().getUniqueId().equals(user.getUniqueId())) return;
+
+        trade.cancel(user);
+        HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public void open() {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+        user.getPlayer().openInventory(getInventory());
+    }
+
+    @Override
+    public void update() {
+        setPartnerItems();
+        setValueItems();
+        setStatusItems();
+        setContinuationButton();
     }
 
     private void buildInventoryIfNotExists() {
@@ -71,19 +126,6 @@ public class TradeInventoryImpl implements TradeInventory, InventoryHolder, List
         setBorder();
         setValueModifierItems();
         setPlayerHeads();
-    }
-
-    @Override
-    public void open() {
-        user.getPlayer().openInventory(getInventory());
-    }
-
-    @Override
-    public void update() {
-        setPartnerItems();
-        setValueItems();
-        setStatusItems();
-        setContinuationButton();
     }
 
     private void updatePartnerInventory() {
@@ -287,6 +329,19 @@ public class TradeInventoryImpl implements TradeInventory, InventoryHolder, List
 
     private static final int[] PARTNER_STATUS_SLOTS = new int[] { 23, 24, 25, 26 };
     private static final Map<Integer, Integer> PARTNER_SLOT_MAP = new HashMap<>();
+
+    private static final Set<InventoryAction> ALLOWED_ACTIONS = Set.of(
+            InventoryAction.NOTHING,
+            InventoryAction.PICKUP_ALL,
+            InventoryAction.PICKUP_HALF,
+            InventoryAction.PICKUP_ONE,
+            InventoryAction.PICKUP_SOME,
+            InventoryAction.PLACE_ALL,
+            InventoryAction.PLACE_ONE,
+            InventoryAction.PLACE_SOME,
+            InventoryAction.SWAP_WITH_CURSOR
+    );
+    private static final Set<Integer> ALLOWED_SLOTS_TO_MOVE = Set.of(27, 28, 29, 30, 36, 37, 38, 39, 45, 46, 47, 48);
 
     static {
         BORDER_ITEM = ItemStack.of(Material.GRAY_STAINED_GLASS_PANE);
