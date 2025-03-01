@@ -1,7 +1,10 @@
 package de.tmxx.trading.user;
 
+import de.tmxx.trading.trade.TradeInventory;
+import de.tmxx.trading.trade.TradingState;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,4 +28,17 @@ public interface User {
     void addRequest(User requestedUser);
     boolean hasRequest(User requestedUser);
     void invalidateRequest(User requestedUser);
+
+    void setInventory(TradeInventory inventory);
+    TradeInventory getInventory();
+
+    void setTradeContents(ItemStack[] contents);
+    ItemStack[] getTradeContents();
+
+    void resetCurrentBid();
+    void changeCurrentBid(int change);
+    int getCurrentBid();
+
+    void setTradingState(TradingState state);
+    TradingState getTradingState();
 }

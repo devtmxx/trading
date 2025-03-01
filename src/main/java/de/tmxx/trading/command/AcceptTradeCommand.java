@@ -1,6 +1,8 @@
 package de.tmxx.trading.command;
 
 import com.google.inject.Inject;
+import de.tmxx.trading.trade.Trade;
+import de.tmxx.trading.trade.TradeFactory;
 import de.tmxx.trading.user.User;
 import de.tmxx.trading.user.UserRegistry;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -15,10 +17,12 @@ import org.bukkit.entity.Player;
  */
 public class AcceptTradeCommand implements PluginCommand {
     private final UserRegistry userRegistry;
+    private final TradeFactory tradeFactory;
 
     @Inject
-    AcceptTradeCommand(UserRegistry userRegistry) {
+    AcceptTradeCommand(UserRegistry userRegistry, TradeFactory tradeFactory) {
         this.userRegistry = userRegistry;
+        this.tradeFactory = tradeFactory;
     }
 
     @Override
@@ -54,6 +58,9 @@ public class AcceptTradeCommand implements PluginCommand {
 
         user.invalidateRequest(target);
 
-        // TODO: actually start the trade
+        Trade trade = tradeFactory.create(target, user);
+        user.setInventory(tradeFactory.createInventory(trade, user));
+        target.setInventory(tradeFactory.createInventory(trade, target));
+        trade.start();
     }
 }

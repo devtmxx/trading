@@ -13,3 +13,22 @@ command:
     help: '%prefix% Please specify the <red>name <white>of the player you want to accept the <green>trade request <white>from.'
     not-found: '%prefix% The specified player is <red>offline<white>.'
     no-invitation: '%prefix% This player <red>did not <white>sent a trade request or it <red>expired<white>.'
+
+inventory:
+  name: 'Trade with {0}'
+
+item:
+  value-modifier:
+    name: '<green>+{0} Coins<dark_gray>/<red>-{0} Coins'
+    lore: '%n<gray>Left click: <green>Add%n<gray>Right click: <red>Remove'
+  value:
+    name: '<yellow>{0} Coins'
+  status:
+    offered: '<gold>Offered trade!'
+    confirm: '<green>Confirm trade!'
+    completion: '<green>Closing the deal...'
+  trade:
+    offer: '<gold>Offer trade!'
+    offer-waiting: '<green>Waiting for mutual offer...'
+    confirm: '<green>Confirm trade!'
+    complete: '<green>Closing the deal...'

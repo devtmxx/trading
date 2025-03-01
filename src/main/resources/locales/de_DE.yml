@@ -13,3 +13,22 @@ command:
     help: '%prefix% Bitte gib den <red>Namen <white>des Spielers an, dessen <green>Handel-Anfrage <white>du akzeptieren möchtest.'
     not-found: '%prefix% Der angegebene Spieler ist <red>offline<white>.'
     no-invitation: '%prefix% Dieser Spieler hat dir <red>keine <white>Handel-Anfrage gesendet oder sie ist <red>abgelaufen<white>.'
+
+inventory:
+  name: 'Handel mit {0}'
+
+item:
+  value-modifier:
+    name: '<green>+{0} Münzen<dark_gray>/<red>-{0} Münzen'
+    lore: '%n<gray>Linksklick: <green>Hinzufügen%n<gray>Rechtsklick: <red>Entfernen'
+  value:
+    name: '<yellow>{0} Münzen'
+  status:
+    offered: '<gold>Handel angeboten!'
+    confirm: '<green>Handel bestätigen!'
+    completion: '<green>Abschließen des Handels...'
+  trade:
+    offer: '<gold>Handel anbieten!'
+    offer-waiting: '<green>Warten auf beidseitiges Angebot...'
+    confirm: '<green>Handel bestätigen!'
+    complete: '<green>Abschließen des Handels...'

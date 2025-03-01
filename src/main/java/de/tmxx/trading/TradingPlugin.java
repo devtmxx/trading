@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import de.tmxx.trading.module.helper.HelperModule;
 import de.tmxx.trading.module.i18n.I18nModule;
 import de.tmxx.trading.module.plugin.PluginModule;
+import de.tmxx.trading.module.trade.TradeModule;
 import de.tmxx.trading.module.user.UserModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +28,7 @@ public class TradingPlugin extends JavaPlugin {
                 new PluginModule(this),
                 new I18nModule(),
                 new UserModule(),
+                new TradeModule(),
                 new HelperModule()
         );
 

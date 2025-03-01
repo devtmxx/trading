@@ -1,5 +1,6 @@
 package de.tmxx.trading.trade;
 
+import com.google.inject.assistedinject.Assisted;
 import de.tmxx.trading.user.User;
 
 /**
@@ -10,5 +11,6 @@ import de.tmxx.trading.user.User;
  * @version 1.0
  */
 public interface TradeFactory {
-    Trade create(User initiator, User partner);
+    Trade create(@Assisted("initiator") User initiator, @Assisted("partner") User partner);
+    TradeInventory createInventory(Trade trade, User user);
 }

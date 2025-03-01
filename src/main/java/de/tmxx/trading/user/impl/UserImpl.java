@@ -3,9 +3,12 @@ package de.tmxx.trading.user.impl;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.tmxx.trading.i18n.I18n;
+import de.tmxx.trading.trade.TradeInventory;
+import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -28,6 +31,11 @@ public class UserImpl implements User {
     private final Player player;
 
     private final Map<UUID, Long> requests = new HashMap<>();
+
+    private TradeInventory currentInventory = null;
+    private ItemStack[] currentTradeContents = new ItemStack[12];
+    private int currentBid = 0;
+    private TradingState currentTradingState = TradingState.TRADING;
 
     @Inject
     UserImpl(I18n i18n, @Assisted Player player) {
@@ -87,5 +95,50 @@ public class UserImpl implements User {
     @Override
     public void invalidateRequest(User requestedUser) {
         requests.remove(requestedUser.getUniqueId());
+    }
+
+    @Override
+    public void setInventory(TradeInventory inventory) {
+        currentInventory = inventory;
+    }
+
+    @Override
+    public TradeInventory getInventory() {
+        return currentInventory;
+    }
+
+    @Override
+    public void setTradeContents(ItemStack[] contents) {
+        currentTradeContents = contents;
+    }
+
+    @Override
+    public ItemStack[] getTradeContents() {
+        return currentTradeContents;
+    }
+
+    @Override
+    public void resetCurrentBid() {
+        currentBid = 0;
+    }
+
+    @Override
+    public void changeCurrentBid(int change) {
+        currentBid += change;
+    }
+
+    @Override
+    public int getCurrentBid() {
+        return currentBid;
+    }
+
+    @Override
+    public void setTradingState(TradingState state) {
+        currentTradingState = state;
+    }
+
+    @Override
+    public TradingState getTradingState() {
+        return currentTradingState;
     }
 }
