@@ -22,6 +22,7 @@ public class TradeImpl implements Trade {
     private final User partner;
 
     private int countdown = START_COUNTDOWN;
+    private boolean cancelled = false;
 
     @Inject
     TradeImpl(@Assisted("initiator") User initiator, @Assisted("partner") User partner) {
@@ -37,6 +38,9 @@ public class TradeImpl implements Trade {
 
     @Override
     public void cancel(User cancelledBy) {
+        if (cancelled) return;
+        cancelled = true;
+
         forBoth(user -> {
             user.sendMessage("trade-cancelled", cancelledBy.getName());
             user.getPlayer().closeInventory();

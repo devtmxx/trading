@@ -32,3 +32,5 @@ item:
     offer-waiting: '<green>Warten auf beidseitiges Angebot...'
     confirm: '<green>Handel bestätigen!'
     complete: '<green>Abschließen des Handels...'
+
+trade-cancelled: '%prefix% Der Handel wurde von <green>{0} <white>abgebrochen.'
