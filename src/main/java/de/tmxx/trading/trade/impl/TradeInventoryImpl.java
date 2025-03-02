@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -78,10 +79,33 @@ public class TradeInventoryImpl implements TradeInventory, InventoryHolder, List
             return;
         }
 
-        updateOwnItems();
-        update();
-        updatePartnerInventory();
         registerEdit();
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            updateOwnItems();
+            update();
+            updatePartnerInventory();
+        });
+    }
+
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+        if (event.getInventory().getHolder(false) != this) return;
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+        if (!player.getUniqueId().equals(user.getUniqueId())) return;
+
+        for (Integer slot : event.getNewItems().keySet()) {
+            if (ALLOWED_SLOTS_TO_MOVE.contains(slot)) continue;
+
+            event.setResult(Event.Result.DENY);
+            return;
+        }
+
+        registerEdit();
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            updateOwnItems();
+            update();
+            updatePartnerInventory();
+        });
     }
 
     @EventHandler
