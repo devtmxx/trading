@@ -15,6 +15,7 @@ public interface Trade {
     User getPartner(User user);
 
     void resetCountdown();
-    void decrementCountdown();
     int getCountdown();
+
+    void checkTradingStates();
 }

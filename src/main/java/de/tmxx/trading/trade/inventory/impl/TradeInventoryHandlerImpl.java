@@ -118,7 +118,19 @@ public class TradeInventoryHandlerImpl implements TradeInventoryHandler {
     }
 
     private void changeState() {
+        if (user.getTradingState().equals(TradingState.TRADING)) {
+            user.setTradingState(TradingState.OFFERED);
+        } else {
+            User partner = trade.getPartner(user);
+            if (user.getTradingState().equals(TradingState.OFFERED) && (partner.getTradingState().equals(TradingState.ACCEPTED) || partner.getTradingState().equals(TradingState.OFFERED))) {
+                user.setTradingState(TradingState.ACCEPTED);
+            }
+        }
 
+        user.getInventory().update();
+        updatePartnerInventory();
+
+        trade.checkTradingStates();
     }
 
     static {

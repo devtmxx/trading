@@ -5,6 +5,9 @@ import com.google.inject.assistedinject.Assisted;
 import de.tmxx.trading.trade.Trade;
 import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.function.Consumer;
 
@@ -18,14 +21,17 @@ import java.util.function.Consumer;
 public class TradeImpl implements Trade {
     private static final int START_COUNTDOWN = 5;
 
+    private final JavaPlugin plugin;
     private final User initiator;
     private final User partner;
 
     private int countdown = START_COUNTDOWN;
     private boolean cancelled = false;
+    private BukkitTask completionTask = null;
 
     @Inject
-    TradeImpl(@Assisted("initiator") User initiator, @Assisted("partner") User partner) {
+    TradeImpl(JavaPlugin plugin, @Assisted("initiator") User initiator, @Assisted("partner") User partner) {
+        this.plugin = plugin;
         this.initiator = initiator;
         this.partner = partner;
     }
@@ -40,6 +46,11 @@ public class TradeImpl implements Trade {
     public void cancel(User cancelledBy) {
         if (cancelled) return;
         cancelled = true;
+
+        if (completionTask != null) {
+            completionTask.cancel();
+            completionTask = null;
+        }
 
         forBoth(user -> {
             user.sendMessage("trade-cancelled", cancelledBy.getName());
@@ -62,17 +73,40 @@ public class TradeImpl implements Trade {
     }
 
     @Override
-    public void decrementCountdown() {
-        countdown--;
+    public int getCountdown() {
+        return countdown;
     }
 
     @Override
-    public int getCountdown() {
-        return countdown;
+    public void checkTradingStates() {
+        if (initiator.getTradingState().equals(TradingState.ACCEPTED) && partner.getTradingState().equals(TradingState.ACCEPTED)) {
+            startCompletion();
+        }
     }
 
     private void forBoth(Consumer<User> action) {
         action.accept(initiator);
         action.accept(partner);
+    }
+
+    private void startCompletion() {
+        if (completionTask != null) return;
+
+        forBoth(user -> user.setTradingState(TradingState.COMPLETION));
+        forBoth(user -> user.getInventory().update());
+
+        completionTask = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            countdown--;
+
+            if (countdown == 0) {
+                // TODO: finish the trade
+
+                completionTask.cancel();
+                completionTask = null;
+                return;
+            }
+
+            forBoth(user -> user.getInventory().update());
+        }, 20L, 20L);
     }
 }
