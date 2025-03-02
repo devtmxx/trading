@@ -7,6 +7,7 @@ import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.trade.inventory.TradeInventoryBuilder;
 import de.tmxx.trading.user.User;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -98,7 +99,7 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     private ItemStack getValueModifierItem(int amount) {
         ItemStack itemStack = ItemStack.of(Material.GOLD_INGOT);
         itemStack.editMeta(meta -> {
-            meta.displayName(user.translate("item.value-modifier.name", amount));
+            meta.displayName(user.translate("item.value-modifier.name", amount).decoration(TextDecoration.ITALIC, false));
             meta.lore(user.translateLore("item.value-modifier.lore"));
         });
 
@@ -121,7 +122,7 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     private ItemStack buildHead(Player player) {
         ItemStack head = ItemStack.of(Material.PLAYER_HEAD);
         head.editMeta(SkullMeta.class, meta -> {
-            meta.displayName(player.displayName());
+            meta.displayName(player.displayName().decoration(TextDecoration.ITALIC, false));
             meta.setPlayerProfile(player.getPlayerProfile());
         });
         return head;
@@ -144,7 +145,7 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     private ItemStack getValueItem(int value) {
         ItemStack itemStack = ItemStack.of(Material.SUGAR_CANE);
         itemStack.editMeta(meta -> {
-            meta.displayName(user.translate("item.value.name", value));
+            meta.displayName(user.translate("item.value.name", value).decoration(TextDecoration.ITALIC, false));
         });
         return itemStack;
     }
@@ -189,50 +190,40 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     }
 
     private ItemStack tradingPaneItem() {
-        ItemStack itemStack = ItemStack.of(Material.GRAY_STAINED_GLASS_PANE);
-        itemStack.editMeta(meta -> meta.displayName(Component.empty()));
-        return itemStack;
+        return createItem(Material.GRAY_STAINED_GLASS_PANE, null);
     }
 
     private ItemStack offeredPaneItem() {
-        ItemStack itemStack = ItemStack.of(Material.ORANGE_STAINED_GLASS_PANE);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.status.offered")));
-        return itemStack;
+        return createItem(Material.ORANGE_STAINED_GLASS_PANE, "item.status.offered");
     }
 
     private ItemStack confirmPaneItem() {
-        ItemStack itemStack = ItemStack.of(Material.LIME_STAINED_GLASS_PANE);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.status.confirm")));
-        return itemStack;
+        return createItem(Material.LIME_STAINED_GLASS_PANE, "item.status.confirm");
     }
 
     private ItemStack completionPaneItem(int countdown) {
-        ItemStack itemStack = ItemStack.of(Material.LIME_STAINED_GLASS_PANE).asQuantity(countdown);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.status.completion")));
-        return itemStack;
+        return createItem(Material.LIME_STAINED_GLASS_PANE, "item.status.completion").asQuantity(countdown);
     }
 
     private ItemStack offerButton() {
-        ItemStack itemStack = ItemStack.of(Material.ORANGE_DYE);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.trade.offer")));
-        return itemStack;
+        return createItem(Material.ORANGE_DYE, "item.trade.offer");
     }
 
     private ItemStack confirmTradeButton() {
-        ItemStack itemStack = ItemStack.of(Material.LIGHT_BLUE_DYE);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.trade.confirm")));
-        return itemStack;
+        return createItem(Material.LIGHT_BLUE_DYE, "item.trade.confirm");
     }
 
     private ItemStack completeButton() {
-        ItemStack itemStack = ItemStack.of(Material.LIME_DYE);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.trade.complete")));
-        return itemStack;
+        return createItem(Material.LIME_DYE, "item.trade.complete");
     }
 
     private ItemStack offerWaitingButton() {
-        ItemStack itemStack = ItemStack.of(Material.LIME_DYE);
-        itemStack.editMeta(meta -> meta.displayName(user.translate("item.trade.offer-waiting")));
+        return createItem(Material.LIME_DYE, "item.trade.offer-waiting");
+    }
+
+    private ItemStack createItem(Material material, String name) {
+        ItemStack itemStack = ItemStack.of(material);
+        itemStack.editMeta(meta -> meta.displayName(user.translate(name).decoration(TextDecoration.ITALIC, false)));
         return itemStack;
     }
 
