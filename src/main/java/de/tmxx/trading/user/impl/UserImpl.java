@@ -3,11 +3,10 @@ package de.tmxx.trading.user.impl;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.tmxx.trading.i18n.I18n;
-import de.tmxx.trading.trade.TradeInventory;
+import de.tmxx.trading.trade.inventory.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

@@ -1,4 +1,6 @@
-package de.tmxx.trading.trade;
+package de.tmxx.trading.trade.inventory;
+
+import org.bukkit.inventory.Inventory;
 
 /**
  * Project: trading
@@ -9,5 +11,6 @@ package de.tmxx.trading.trade;
  */
 public interface TradeInventory {
     void open();
+    Inventory getInventory();
     void update();
 }

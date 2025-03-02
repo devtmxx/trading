@@ -1,6 +1,6 @@
 package de.tmxx.trading.user;
 
-import de.tmxx.trading.trade.TradeInventory;
+import de.tmxx.trading.trade.inventory.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
