@@ -47,10 +47,7 @@ public class TradeImpl implements Trade {
         if (cancelled) return;
         cancelled = true;
 
-        if (completionTask != null) {
-            completionTask.cancel();
-            completionTask = null;
-        }
+        resetCountdown();
 
         forBoth(user -> {
             user.sendMessage("trade-cancelled", cancelledBy.getName());
@@ -69,6 +66,11 @@ public class TradeImpl implements Trade {
 
     @Override
     public void resetCountdown() {
+        if (completionTask != null) {
+            completionTask.cancel();
+            completionTask = null;
+        }
+
         countdown = START_COUNTDOWN;
     }
 
