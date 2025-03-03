@@ -10,9 +10,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -173,18 +175,14 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     }
 
     private void setContinuationButton() {
+        TradingState partnerState = trade.getPartner(user).getTradingState();
+
         ItemStack itemStack = switch (user.getTradingState()) {
             case TRADING -> offerButton();
-            case OFFERED -> offerWaitingButton();
-            case ACCEPTED -> confirmTradeButton();
+            case OFFERED -> partnerState.equals(TradingState.TRADING) ? waitingButton() : acceptButton();
+            case ACCEPTED -> waitingButton();
             case COMPLETION -> completeButton();
         };
-
-        User partner = trade.getPartner(user);
-        if (user.getTradingState().equals(TradingState.OFFERED) &&
-                (partner.getTradingState().equals(TradingState.OFFERED) || partner.getTradingState().equals(TradingState.ACCEPTED))) {
-            itemStack = offerWaitingButton();
-        }
 
         inventory.setItem(40, itemStack);
     }
@@ -206,24 +204,34 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     }
 
     private ItemStack offerButton() {
-        return createItem(Material.ORANGE_DYE, "item.trade.offer");
+        return createItem(Material.ORANGE_DYE, "item.trade.offer", true);
     }
 
-    private ItemStack confirmTradeButton() {
-        return createItem(Material.LIGHT_BLUE_DYE, "item.trade.confirm");
+    private ItemStack acceptButton() {
+        return createItem(Material.LIGHT_BLUE_DYE, "item.trade.accept", true);
     }
 
     private ItemStack completeButton() {
         return createItem(Material.LIME_DYE, "item.trade.complete");
     }
 
-    private ItemStack offerWaitingButton() {
-        return createItem(Material.LIME_DYE, "item.trade.offer-waiting");
+    private ItemStack waitingButton() {
+        return createItem(Material.GRAY_DYE, "item.trade.waiting");
     }
 
     private ItemStack createItem(Material material, String name) {
+        return createItem(material, name, false);
+    }
+
+    private ItemStack createItem(Material material, String name, boolean enchanted) {
         ItemStack itemStack = ItemStack.of(material);
-        itemStack.editMeta(meta -> meta.displayName(user.translate(name).decoration(TextDecoration.ITALIC, false)));
+
+        if (enchanted) itemStack.addUnsafeEnchantment(Enchantment.UNBREAKING, 1);
+
+        itemStack.editMeta(meta -> {
+            meta.displayName(user.translate(name).decoration(TextDecoration.ITALIC, false));
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+        });
         return itemStack;
     }
 

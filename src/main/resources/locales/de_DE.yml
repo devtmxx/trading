@@ -29,8 +29,8 @@ item:
     completion: '<green>Abschließen des Handels...'
   trade:
     offer: '<gold>Handel anbieten!'
-    offer-waiting: '<green>Warten auf beidseitiges Angebot...'
-    confirm: '<green>Handel bestätigen!'
+    waiting: '<gray>Warten auf Handelspartner...'
+    accept: '<green>Handel akzeptieren!'
     complete: '<green>Abschließen des Handels...'
 
 trade-cancelled: '%prefix% Der Handel wurde von <green>{0} <white>abgebrochen.'

@@ -29,8 +29,8 @@ item:
     completion: '<green>Closing the deal...'
   trade:
     offer: '<gold>Offer trade!'
-    offer-waiting: '<green>Waiting for mutual offer...'
-    confirm: '<green>Confirm trade!'
+    waiting: '<green>Waiting for trading partner...'
+    accept: '<green>Accept the trade!'
     complete: '<green>Closing the deal...'
 
 trade-cancelled: '%prefix% The trade has been cancelled by <green>{0}<white>.'
