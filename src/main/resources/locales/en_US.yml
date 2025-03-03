@@ -34,3 +34,5 @@ item:
     complete: '<green>Closing the deal...'
 
 trade-cancelled: '%prefix% The trade has been cancelled by <green>{0}<white>.'
+trade-cancelled-currency: '%prefix% The trade has been cancelled because the transaction has not been successful.'
+trade-success: '%prefix% The trade with <green>{0} <white>was successful.'

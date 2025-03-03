@@ -113,7 +113,9 @@ public class UserImpl implements User {
     }
 
     @Override
-    public void returnItems() {
+    public void giveItems(User user) {
+        Player player = user.getPlayer();
+
         for (int i = 0; i < currentTradeContents.length; i++) {
             ItemStack itemStack = currentTradeContents[i];
 

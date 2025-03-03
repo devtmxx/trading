@@ -34,3 +34,5 @@ item:
     complete: '<green>Abschließen des Handels...'
 
 trade-cancelled: '%prefix% Der Handel wurde von <green>{0} <white>abgebrochen.'
+trade-cancelled-currency: '%prefix% Der Handel wurde abgebrochen, weil die Transaktion nicht erfolgreich war.'
+trade-success: '%prefix% Der Handel mit <green>{0} <white>war erfolgreich.'

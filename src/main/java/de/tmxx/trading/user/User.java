@@ -33,7 +33,7 @@ public interface User {
     TradeInventory getInventory();
 
     void setTradeContents(ItemStack[] contents);
-    void returnItems();
+    void giveItems(User user);
     ItemStack[] getTradeContents();
 
     void resetCurrentBid();
