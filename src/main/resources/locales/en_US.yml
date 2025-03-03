@@ -12,7 +12,7 @@ command:
   accepttrade:
     help: '%prefix% Please specify the <red>name <white>of the player you want to accept the <green>trade request <white>from.'
     not-found: '%prefix% The specified player is <red>offline<white>.'
-    no-invitation: '%prefix% This player <red>did not <white>sent a trade request or it <red>expired<white>.'
+    no-invitation: '%prefix% This player <red>did not <white>send a trade request or it <red>expired<white>.'
 
 inventory:
   name: 'Trade with {0}'

@@ -73,6 +73,7 @@ public class UserImpl implements User {
 
     @Override
     public Component translate(String key, Object... args) {
+        if (key == null) return Component.empty();
         return i18n.translate(player.locale(), key, args);
     }
 
