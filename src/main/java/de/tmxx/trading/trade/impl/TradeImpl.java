@@ -147,21 +147,41 @@ public class TradeImpl implements Trade {
     }
 
     private boolean exchangeMoney() {
-        return sendMoney(initiator, partner) && sendMoney(partner, initiator);
+        boolean successful = withdrawMoney();
+        if (!successful) return false;
+
+        sendMoney(initiator, partner);
+        sendMoney(partner, initiator);
+        return true;
     }
 
-    private boolean sendMoney(User from, User to) {
-        if (from.getCurrentBid() == 0) return true;
+    private boolean withdrawMoney() {
+        boolean success = withdrawMoneyFrom(initiator);
+        if (!success) return false;
 
-        EconomyResponse response = economy.withdrawPlayer(from.getPlayer(), from.getCurrentBid());
-        if (!response.transactionSuccess()) return false;
-
-        response = economy.depositPlayer(to.getPlayer(), from.getCurrentBid());
-        if (!response.transactionSuccess()) {
-            economy.depositPlayer(from.getPlayer(), from.getCurrentBid());
+        success = withdrawMoneyFrom(partner);
+        if (!success) {
+            returnMoney(initiator);
             return false;
         }
 
         return true;
+    }
+
+    private boolean withdrawMoneyFrom(User user) {
+        if (user.getCurrentBid() == 0) return true;
+
+        EconomyResponse response = economy.withdrawPlayer(user.getPlayer(), user.getCurrentBid());
+        return response.transactionSuccess();
+    }
+
+    private void returnMoney(User user) {
+        if (user.getCurrentBid() == 0) return;
+        economy.depositPlayer(user.getPlayer(), user.getCurrentBid());
+    }
+
+    private void sendMoney(User from, User to) {
+        if (from.getCurrentBid() == 0) return;
+        economy.depositPlayer(to.getPlayer(), from.getCurrentBid());
     }
 }
