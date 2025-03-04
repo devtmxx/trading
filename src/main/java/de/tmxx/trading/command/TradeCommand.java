@@ -28,7 +28,6 @@ public class TradeCommand implements PluginCommand {
 
     private final String name;
     private final List<String> aliases = new ArrayList<>();
-    private final FileConfiguration config;
 
     private final UserRegistry userRegistry;
     private final TradingStatus tradingStatus;
@@ -44,7 +43,6 @@ public class TradeCommand implements PluginCommand {
         name = config.getString("command.name", "trade");
         aliases.addAll(config.getStringList("command.aliases"));
 
-        this.config = config;
         this.userRegistry = userRegistry;
         this.tradingStatus = tradingStatus;
         this.examiner = examiner;
