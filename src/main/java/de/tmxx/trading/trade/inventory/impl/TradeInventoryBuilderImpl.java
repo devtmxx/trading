@@ -51,7 +51,11 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
 
     @Override
     public Inventory newInventory(InventoryHolder holder) {
-        inventory = Bukkit.createInventory(holder, INVENTORY_SIZE, user.translate("inventory.name", trade.getPartner(user).getName()));
+        inventory = Bukkit.createInventory(
+                holder,
+                INVENTORY_SIZE,
+                user.translate("inventory.name", trade.getPartner(user).getDisplayName())
+        );
 
         setStaticItems();
         updateContent();

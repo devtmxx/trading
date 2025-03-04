@@ -33,7 +33,7 @@ public class DistanceCheck implements TradeLicenseCheck {
         boolean passed = worldsPassed && initiator.getPlayer().getLocation().distanceSquared(partner.getPlayer().getLocation()) <= distance;
 
         if (!passed) {
-            initiator.sendMessage("check.distance.failed", partner.getName());
+            initiator.sendMessage("check.distance.failed", partner.getDisplayName());
         }
 
         return passed;

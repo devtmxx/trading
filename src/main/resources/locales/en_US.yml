@@ -6,8 +6,8 @@ command:
     no-self-trade: "%prefix% You <red>can't <white>trade with yourself."
     not-found: '%prefix% The specified player is <red>offline<white>.'
     already-invited: '%prefix% You already sent a <red>trade request <white>to this player.'
-    sent: '%prefix% You sent a <green>trade request <white>to <yellow>{0}<white>.'
-    received: '%prefix% You received a <green>trade request <white>from <yellow>{0}<white>.<newline>%prefix% Click <gold><bold><click:run_command:"/accepttrade {0}">HERE</click></bold> <white>to start the trade.'
+    sent: '%prefix% You sent a <green>trade request <white>to <reset>{0}<white>.'
+    received: '%prefix% You received a <green>trade request <white>from <reset>{0}<white>.<newline>%prefix% Click <gold><bold><click:run_command:"/accepttrade {1}">HERE</click></bold> <white>to start the trade.'
   accepttrade:
     help: '%prefix% Please specify the <red>name <white>of the player you want to accept the <green>trade request <white>from.'
     not-found: '%prefix% The specified player is <red>offline<white>.'
@@ -40,13 +40,13 @@ check:
   matching-ip:
     failed: '%prefix% You are currently <red>not <white>allowed to start a trade with this player. Please contact the server team if you think that this is an error.'
   distance:
-    failed: '%prefix% You and <green>{0} <white>are too far apart.'
+    failed: '%prefix% You and <reset>{0} <white>are too far apart.'
   worlds:
-    failed: '%prefix% You and <green>{0} <white>are not in the same world.'
+    failed: '%prefix% You and <reset>{0} <white>are not in the same world.'
 
 trade-cancelled: '%prefix% The trade has been <red>cancelled<white>.'
-trade-cancelled-by-user: '%prefix% The trade has been <red>cancelled <white>by <green>{0}<white>.'
+trade-cancelled-by-user: '%prefix% The trade has been <red>cancelled <white>by <reset>{0}<white>.'
 trade-cancelled-currency: '%prefix% The trade has been cancelled because the transaction has not been successful.'
-trade-success: '%prefix% The trade with <green>{0} <white>was successful.'
+trade-success: '%prefix% The trade with <reset>{0} <white>was successful.'
 
 trading-disabled: '%prefix% Trading is currently <red>disabled<white>.'

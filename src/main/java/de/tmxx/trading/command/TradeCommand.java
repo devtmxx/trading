@@ -104,8 +104,8 @@ public class TradeCommand implements PluginCommand {
 
         target.addRequest(user);
 
-        user.sendMessage("command.trade.sent", target.getName());
-        target.sendMessage("command.trade.received", user.getName());
+        user.sendMessage("command.trade.sent", target.getDisplayName());
+        target.sendMessage("command.trade.received", user.getDisplayName(), user.getName());
     }
 
     @Override

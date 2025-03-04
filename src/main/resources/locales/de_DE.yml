@@ -6,8 +6,8 @@ command:
     no-self-trade: '%prefix% Du kannst <red>nicht <white>mit dir selbst handeln.'
     not-found: '%prefix% Der angegebene Spieler ist <red>offline<white>.'
     already-invited: '%prefix% Du hast diesem Spieler bereits eine <red>Handel-Anfrage <white>gesendet.'
-    sent: '%prefix% Du hast dem Spieler <yellow>{0} <white>eine <green>Handel-Anfrage <white>gesendet.'
-    received: '%prefix% Du hast eine <green>Handel-Anfrage <white>von <yellow>{0} <white>erhalten.<newline>%prefix% Klicke <gold><bold><click:run_command:"/accepttrade {0}">HIER</click></bold><white>, um den Handel zu starten.'
+    sent: '%prefix% Du hast dem Spieler <reset>{0} <white>eine <green>Handel-Anfrage <white>gesendet.'
+    received: '%prefix% Du hast eine <green>Handel-Anfrage <white>von <reset>{0} <white>erhalten.<newline>%prefix% Klicke <gold><bold><click:run_command:"/accepttrade {1}">HIER</click></bold><white>, um den Handel zu starten.'
   accepttrade:
     help: '%prefix% Bitte gib den <red>Namen <white>des Spielers an, dessen <green>Handel-Anfrage <white>du akzeptieren möchtest.'
     not-found: '%prefix% Der angegebene Spieler ist <red>offline<white>.'
@@ -40,13 +40,13 @@ check:
   matching-ip:
     failed: '%prefix% Du darfst mit diesem Spieler aktuell <red>nicht <white>handeln. Wenn du der Meinung bist, dass dies ein Fehler sei, wende dich bitte an das Serverteam.'
   distance:
-    failed: '%prefix% Du und <green>{0} <white>seid zu weit voneinander entfernt.'
+    failed: '%prefix% Du und <reset>{0} <white>seid zu weit voneinander entfernt.'
   worlds:
-    failed: '%prefix% Du und <green>{0} <white>seid nicht in der gleichen Welt.'
+    failed: '%prefix% Du und <reset>{0} <white>seid nicht in der gleichen Welt.'
 
 trade-cancelled: '%prefix% Der Handel wurde <red>abgebrochen<white>.'
-trade-cancelled-by-user: '%prefix% Der Handel wurde von <green>{0} <red>abgebrochen<white>.'
+trade-cancelled-by-user: '%prefix% Der Handel wurde von <reset>{0} <red>abgebrochen<white>.'
 trade-cancelled-currency: '%prefix% Der Handel wurde abgebrochen, weil die Transaktion nicht erfolgreich war.'
-trade-success: '%prefix% Der Handel mit <green>{0} <white>war erfolgreich.'
+trade-success: '%prefix% Der Handel mit <reset>{0} <white>war erfolgreich.'
 
 trading-disabled: '%prefix% Das Handeln ist gerade <red>deaktiviert<white>.'

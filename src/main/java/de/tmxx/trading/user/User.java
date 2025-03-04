@@ -20,6 +20,7 @@ import java.util.UUID;
 public interface User {
     Player getPlayer();
     String getName();
+    String getDisplayName();
     UUID getUniqueId();
     String getIp();
     void sendMessage(String key, Object... args);

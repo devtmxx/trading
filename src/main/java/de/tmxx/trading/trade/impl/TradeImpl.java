@@ -58,7 +58,7 @@ public class TradeImpl implements Trade {
             if (cancelledBy == null) {
                 user.sendMessage("trade-cancelled");
             } else {
-                user.sendMessage("trade-cancelled-by-user", cancelledBy.getName());
+                user.sendMessage("trade-cancelled-by-user", cancelledBy.getDisplayName());
             }
             user.getPlayer().closeInventory();
             user.setInventory(null);
@@ -149,7 +149,7 @@ public class TradeImpl implements Trade {
 
         forBoth(user -> {
             user.resetCurrentBid();
-            user.sendMessage("trade-success", getPartner(user).getName());
+            user.sendMessage("trade-success", getPartner(user).getDisplayName());
         });
         forBoth(user -> user.setTrade(null));
     }

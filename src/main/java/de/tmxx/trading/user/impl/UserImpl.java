@@ -8,6 +8,7 @@ import de.tmxx.trading.trade.inventory.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,6 +54,11 @@ public class UserImpl implements User {
     @Override
     public String getName() {
         return player.getName();
+    }
+
+    @Override
+    public String getDisplayName() {
+        return MiniMessage.miniMessage().serialize(player.displayName());
     }
 
     @Override

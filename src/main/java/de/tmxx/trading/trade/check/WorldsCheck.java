@@ -30,7 +30,7 @@ public class WorldsCheck implements TradeLicenseCheck {
         boolean passed = initiator.getPlayer().getWorld().equals(partner.getPlayer().getWorld());
 
         if (!passed) {
-            initiator.sendMessage("check.worlds.failed", partner.getName());
+            initiator.sendMessage("check.worlds.failed", partner.getDisplayName());
         }
 
         return passed;
