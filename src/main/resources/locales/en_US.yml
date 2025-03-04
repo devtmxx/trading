@@ -30,6 +30,7 @@ item:
     confirm: '<green>Confirm trade!'
     completion: '<green>Closing the deal...'
   trade:
+    no-valid-offer: '<red>No valid offer'
     offer: '<gold>Offer trade!'
     waiting: '<green>Waiting for trading partner...'
     accept: '<green>Accept the trade!'

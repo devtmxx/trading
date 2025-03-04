@@ -164,6 +164,13 @@ public class UserImpl implements User {
     }
 
     @Override
+    public boolean isOfferValid() {
+        boolean moneyPassed = currentBid > 0;
+        boolean contentPassed = checkContent();
+        return moneyPassed || contentPassed;
+    }
+
+    @Override
     public void setTradingState(TradingState state) {
         currentTradingState = state;
     }
@@ -171,5 +178,13 @@ public class UserImpl implements User {
     @Override
     public TradingState getTradingState() {
         return currentTradingState;
+    }
+
+    private boolean checkContent() {
+        for (ItemStack itemStack : currentTradeContents) {
+            if (itemStack != null && !itemStack.isEmpty()) return true;
+        }
+
+        return false;
     }
 }

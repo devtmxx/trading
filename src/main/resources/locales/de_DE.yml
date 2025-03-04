@@ -30,6 +30,7 @@ item:
     confirm: '<green>Handel bestätigen!'
     completion: '<green>Abschließen des Handels...'
   trade:
+    no-valid-offer: '<red>Kein gültiges Angebot'
     offer: '<gold>Handel anbieten!'
     waiting: '<gray>Warten auf Handelspartner...'
     accept: '<green>Handel akzeptieren!'

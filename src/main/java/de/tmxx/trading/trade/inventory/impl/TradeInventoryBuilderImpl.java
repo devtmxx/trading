@@ -32,11 +32,11 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     private static final int INVENTORY_SIZE = 54;
 
     private static final ItemStack BORDER_ITEM;
-    private static final int[] BORDER_SLOTS = new int[] { 1, 2, 4, 6, 7, 13, 22, 31, 49 };
+    private static final int[] BORDER_SLOTS = new int[] { 4, 13, 22, 31, 49 };
 
-    private static final int[] PARTNER_STATUS_SLOTS = new int[] { 23, 24, 25, 26 };
+    private static final int[] PARTNER_STATUS_SLOTS = new int[] { 6, 7, 14, 15, 16, 17, 23, 24, 25, 26 };
     private static final Map<Integer, Integer> PARTNER_SLOT_MAP;
-    private static final int[] OWN_STATUS_SLOTS = new int[] { 18, 19, 20, 21 };
+    private static final int[] OWN_STATUS_SLOTS = new int[] { 1, 2, 18, 19, 20, 21 };
 
     private final Trade trade;
     private final User user;
@@ -80,32 +80,36 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     }
 
     private void setValueModifierItems() {
-        ItemStack ten = getValueModifierItem(10);
-        ItemStack hundred = getValueModifierItem(100);
-        ItemStack thousand = getValueModifierItem(1000);
-        ItemStack tenThousand = getValueModifierItem(10000);
+        ItemStack[] valueModifierItems = new ItemStack[] {
+                getValueModifierItem(10),
+                getValueModifierItem(100),
+                getValueModifierItem(1000),
+                getValueModifierItem(10000)
+        };
 
-        inventory.setItem(9, ten);
-        inventory.setItem(17, ten);
-
-        inventory.setItem(10, hundred);
-        inventory.setItem(16, hundred);
-
-        inventory.setItem(11, thousand);
-        inventory.setItem(15, thousand);
-
-        inventory.setItem(12, tenThousand);
-        inventory.setItem(14, tenThousand);
+        for (int i = 0; i < valueModifierItems.length; i++) {
+            inventory.setItem(9 + i, valueModifierItems[i]);
+        }
     }
 
     private ItemStack getValueModifierItem(int amount) {
-        ItemStack itemStack = ItemStack.of(Material.GOLD_INGOT);
+        ItemStack itemStack = ItemStack.of(valueModifierMaterial(amount));
         itemStack.editMeta(meta -> {
             meta.displayName(user.translate("item.value-modifier.name", amount).decoration(TextDecoration.ITALIC, false));
             meta.lore(user.translateLore("item.value-modifier.lore"));
         });
 
         return itemStack;
+    }
+
+    private Material valueModifierMaterial(int amount) {
+        if (amount < 100) {
+            return Material.GOLD_NUGGET;
+        } else if (amount < 10000) {
+            return Material.GOLD_INGOT;
+        } else {
+            return Material.GOLD_BLOCK;
+        }
     }
 
     private void setPlayerHeads() {
@@ -145,7 +149,7 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
     }
 
     private ItemStack getValueItem(int value) {
-        ItemStack itemStack = ItemStack.of(Material.SUGAR_CANE);
+        ItemStack itemStack = createItem(Material.EMERALD, null, value != 0);
         itemStack.editMeta(meta -> {
             meta.displayName(user.translate("item.value.name", value).decoration(TextDecoration.ITALIC, false));
         });
@@ -178,7 +182,7 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
         TradingState partnerState = trade.getPartner(user).getTradingState();
 
         ItemStack itemStack = switch (user.getTradingState()) {
-            case TRADING -> offerButton();
+            case TRADING -> user.isOfferValid() ? offerButton() : noValidOfferButton();
             case OFFERED -> partnerState.equals(TradingState.TRADING) ? waitingButton() : acceptButton();
             case ACCEPTED -> waitingButton();
             case COMPLETION -> completeButton();
@@ -201,6 +205,10 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
 
     private ItemStack completionPaneItem(int countdown) {
         return createItem(Material.LIME_STAINED_GLASS_PANE, "item.status.completion").asQuantity(countdown);
+    }
+
+    private ItemStack noValidOfferButton() {
+        return createItem(Material.BARRIER, "item.trade.no-valid-offer", false);
     }
 
     private ItemStack offerButton() {

@@ -44,6 +44,8 @@ public interface User {
     void changeCurrentBid(int change);
     int getCurrentBid();
 
+    boolean isOfferValid();
+
     void setTradingState(TradingState state);
     TradingState getTradingState();
 }
