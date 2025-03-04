@@ -3,6 +3,7 @@ package de.tmxx.trading.user.impl;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.tmxx.trading.i18n.I18n;
+import de.tmxx.trading.trade.Trade;
 import de.tmxx.trading.trade.inventory.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
 import de.tmxx.trading.user.User;
@@ -32,6 +33,7 @@ public class UserImpl implements User {
 
     private final Map<UUID, Long> requests = new HashMap<>();
 
+    private Trade trade = null;
     private TradeInventory currentInventory = null;
     private ItemStack[] currentTradeContents = new ItemStack[12];
     private int currentBid = 0;
@@ -96,6 +98,16 @@ public class UserImpl implements User {
     @Override
     public void invalidateRequest(User requestedUser) {
         requests.remove(requestedUser.getUniqueId());
+    }
+
+    @Override
+    public void setTrade(Trade trade) {
+        this.trade = trade;
+    }
+
+    @Override
+    public Trade getTrade() {
+        return trade;
     }
 
     @Override

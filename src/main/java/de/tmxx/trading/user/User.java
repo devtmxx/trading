@@ -1,5 +1,6 @@
 package de.tmxx.trading.user;
 
+import de.tmxx.trading.trade.Trade;
 import de.tmxx.trading.trade.inventory.TradeInventory;
 import de.tmxx.trading.trade.TradingState;
 import net.kyori.adventure.text.Component;
@@ -28,6 +29,9 @@ public interface User {
     void addRequest(User requestedUser);
     boolean hasRequest(User requestedUser);
     void invalidateRequest(User requestedUser);
+
+    void setTrade(Trade trade);
+    Trade getTrade();
 
     void setInventory(TradeInventory inventory);
     TradeInventory getInventory();

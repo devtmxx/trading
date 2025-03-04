@@ -2,12 +2,14 @@ package de.tmxx.trading.command;
 
 import com.google.inject.Inject;
 import de.tmxx.trading.module.plugin.MainConfig;
+import de.tmxx.trading.trade.TradingStatus;
 import de.tmxx.trading.user.User;
 import de.tmxx.trading.user.UserRegistry;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,14 +30,16 @@ public class TradeCommand implements PluginCommand {
     private final FileConfiguration config;
 
     private final UserRegistry userRegistry;
+    private final TradingStatus tradingStatus;
 
     @Inject
-    TradeCommand(@MainConfig FileConfiguration config, UserRegistry userRegistry) {
+    TradeCommand(@MainConfig FileConfiguration config, UserRegistry userRegistry, TradingStatus tradingStatus) {
         name = config.getString("command.name", "trade");
         aliases.addAll(config.getStringList("command.aliases"));
 
         this.config = config;
         this.userRegistry = userRegistry;
+        this.tradingStatus = tradingStatus;
     }
 
     @Override
@@ -57,6 +61,11 @@ public class TradeCommand implements PluginCommand {
 
         User user = userRegistry.get(player);
         if (user == null) return;
+
+        if (!tradingStatus.isEnabled()) {
+            user.sendMessage("trading-disabled");
+            return;
+        }
 
         if (args.length == 0) {
             user.sendMessage("command.trade.help");
@@ -105,5 +114,10 @@ public class TradeCommand implements PluginCommand {
                 .filter(online -> online.canSee(player) && !online.equals(player))
                 .map(Player::getName)
                 .toList();
+    }
+
+    @Override
+    public @Nullable String permission() {
+        return "trading.command.trade";
     }
 }

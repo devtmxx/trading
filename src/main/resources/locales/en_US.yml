@@ -13,6 +13,9 @@ command:
     help: '%prefix% Please specify the <red>name <white>of the player you want to accept the <green>trade request <white>from.'
     not-found: '%prefix% The specified player is <red>offline<white>.'
     no-invitation: '%prefix% This player <red>did not <white>send a trade request or it <red>expired<white>.'
+  toggletrading:
+    enabled: '%prefix% Trading has been <green>enabled<white> for all players.'
+    disabled: '%prefix% Trading has been <red>disabled<white> for all players. All active trading processes have been <red>cancelled<white>.'
 
 inventory:
   name: 'Trade with {0}'
@@ -33,6 +36,9 @@ item:
     accept: '<green>Accept the trade!'
     complete: '<green>Closing the deal...'
 
-trade-cancelled: '%prefix% The trade has been cancelled by <green>{0}<white>.'
+trade-cancelled: '%prefix% The trade has been <red>cancelled<white>.'
+trade-cancelled-by-user: '%prefix% The trade has been <red>cancelled <white>by <green>{0}<white>.'
 trade-cancelled-currency: '%prefix% The trade has been cancelled because the transaction has not been successful.'
 trade-success: '%prefix% The trade with <green>{0} <white>was successful.'
+
+trading-disabled: '%prefix% Trading is currently <red>disabled<white>.'

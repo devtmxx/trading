@@ -10,6 +10,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -47,20 +48,26 @@ public class TradeImpl implements Trade {
     }
 
     @Override
-    public void cancel(User cancelledBy) {
+    public void cancel(@Nullable User cancelledBy) {
         if (done) return;
         done = true;
 
         resetCountdown();
 
         forBoth(user -> {
-            user.sendMessage("trade-cancelled", cancelledBy.getName());
+            if (cancelledBy == null) {
+                user.sendMessage("trade-cancelled");
+            } else {
+                user.sendMessage("trade-cancelled-by-user", cancelledBy.getName());
+            }
             user.getPlayer().closeInventory();
             user.setInventory(null);
             user.setTradingState(TradingState.TRADING);
             user.resetCurrentBid();
             user.giveItems(user);
         });
+
+        forBoth(user -> user.setTrade(null));
     }
 
     @Override
@@ -144,6 +151,7 @@ public class TradeImpl implements Trade {
             user.resetCurrentBid();
             user.sendMessage("trade-success", getPartner(user).getName());
         });
+        forBoth(user -> user.setTrade(null));
     }
 
     private boolean exchangeMoney() {

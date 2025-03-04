@@ -1,6 +1,7 @@
 package de.tmxx.trading.trade;
 
 import de.tmxx.trading.user.User;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Project: trading
@@ -11,7 +12,7 @@ import de.tmxx.trading.user.User;
  */
 public interface Trade {
     void start();
-    void cancel(User cancelledBy);
+    void cancel(@Nullable User cancelledBy);
     User getPartner(User user);
 
     void resetCountdown();

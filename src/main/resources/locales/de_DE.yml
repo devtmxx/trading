@@ -13,6 +13,9 @@ command:
     help: '%prefix% Bitte gib den <red>Namen <white>des Spielers an, dessen <green>Handel-Anfrage <white>du akzeptieren möchtest.'
     not-found: '%prefix% Der angegebene Spieler ist <red>offline<white>.'
     no-invitation: '%prefix% Dieser Spieler hat dir <red>keine <white>Handel-Anfrage gesendet oder sie ist <red>abgelaufen<white>.'
+  toggletrading:
+    enabled: '%prefix% Das Handeln wurde für alle Spieler <green>aktiviert<white>.'
+    disabled: '%prefix% Das Handeln wurde für alle Spieler <red>deaktiviert<white>. Alle aktiven Handelvorgänge wurden <red>abgebrochen<white>.'
 
 inventory:
   name: 'Handel mit {0}'
@@ -33,6 +36,9 @@ item:
     accept: '<green>Handel akzeptieren!'
     complete: '<green>Abschließen des Handels...'
 
-trade-cancelled: '%prefix% Der Handel wurde von <green>{0} <white>abgebrochen.'
+trade-cancelled: '%prefix% Der Handel wurde <red>abgebrochen<white>.'
+trade-cancelled-by-user: '%prefix% Der Handel wurde von <green>{0} <red>abgebrochen<white>.'
 trade-cancelled-currency: '%prefix% Der Handel wurde abgebrochen, weil die Transaktion nicht erfolgreich war.'
 trade-success: '%prefix% Der Handel mit <green>{0} <white>war erfolgreich.'
+
+trading-disabled: '%prefix% Das Handeln ist gerade <red>deaktiviert<white>.'

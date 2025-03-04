@@ -59,8 +59,13 @@ public class AcceptTradeCommand implements PluginCommand {
         user.invalidateRequest(target);
 
         Trade trade = tradeFactory.create(target, user);
+
+        user.setTrade(trade);
         user.setInventory(tradeFactory.createInventory(trade, user));
+
+        target.setTrade(trade);
         target.setInventory(tradeFactory.createInventory(trade, target));
+
         trade.start();
     }
 }
