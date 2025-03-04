@@ -28,9 +28,23 @@ locales:
 # Whether trading is enabled or not. May be toggled using the /toggletrading command.
 enabled: true
 
-# Disables trading for players with matching IPs. This may prevent fraud by players trading with alt-accounts.
-# Default value: true
-no-trading-with-matching-ip: true
+check:
+  # Disables trading for players with matching IPs. This may prevent fraud by players trading with alt-accounts.
+  # Default value: true
+  matching-ip:
+    enabled: true
+
+  # Disables trading for players in different worlds. This has no functional fraud prevention but may spice up gameplay.
+  # Default value: false
+  worlds:
+    enabled: false
+
+  # Disabled trading for players too distant from one another. This is no functional fraud prevention but may spice up
+  # gameplay. Note that if the distance check is enabled, the worlds check will become redundant.
+  # Default value: false
+  distance:
+    enabled: false
+    distance: 100
 
 command:
   # Change the name of the trade command. This is the command players use to start a trade.

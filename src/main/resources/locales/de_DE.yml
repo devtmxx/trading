@@ -5,7 +5,6 @@ command:
     help: '%prefix% Bitte gib den <red>Namen <white>des Spielers an, mit dem du handeln möchtest.'
     no-self-trade: '%prefix% Du kannst <red>nicht <white>mit dir selbst handeln.'
     not-found: '%prefix% Der angegebene Spieler ist <red>offline<white>.'
-    no-trading-with-matching-ip: '%prefix% Du darfst mit diesem Spieler aktuell <red>nicht <white>handeln. Wenn du der Meinung bist, dass dies ein Fehler sei, wende dich bitte an das Serverteam.'
     already-invited: '%prefix% Du hast diesem Spieler bereits eine <red>Handel-Anfrage <white>gesendet.'
     sent: '%prefix% Du hast dem Spieler <yellow>{0} <white>eine <green>Handel-Anfrage <white>gesendet.'
     received: '%prefix% Du hast eine <green>Handel-Anfrage <white>von <yellow>{0} <white>erhalten.<newline>%prefix% Klicke <gold><bold><click:run_command:"/accepttrade {0}">HIER</click></bold><white>, um den Handel zu starten.'
@@ -35,6 +34,14 @@ item:
     waiting: '<gray>Warten auf Handelspartner...'
     accept: '<green>Handel akzeptieren!'
     complete: '<green>Abschließen des Handels...'
+
+check:
+  matching-ip:
+    failed: '%prefix% Du darfst mit diesem Spieler aktuell <red>nicht <white>handeln. Wenn du der Meinung bist, dass dies ein Fehler sei, wende dich bitte an das Serverteam.'
+  distance:
+    failed: '%prefix% Du und <green>{0} <white>seid zu weit voneinander entfernt.'
+  worlds:
+    failed: '%prefix% Du und <green>{0} <white>seid nicht in der gleichen Welt.'
 
 trade-cancelled: '%prefix% Der Handel wurde <red>abgebrochen<white>.'
 trade-cancelled-by-user: '%prefix% Der Handel wurde von <green>{0} <red>abgebrochen<white>.'

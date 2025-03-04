@@ -5,7 +5,6 @@ command:
     help: '%prefix% Please specify the <red>name <white>of the player with whom you want to start a trade.'
     no-self-trade: "%prefix% You <red>can't <white>trade with yourself."
     not-found: '%prefix% The specified player is <red>offline<white>.'
-    no-trading-with-matching-ip: '%prefix% You are currently <red>not <white>allowed to start a trade with this player. Please contact the server team if you think that this is an error.'
     already-invited: '%prefix% You already sent a <red>trade request <white>to this player.'
     sent: '%prefix% You sent a <green>trade request <white>to <yellow>{0}<white>.'
     received: '%prefix% You received a <green>trade request <white>from <yellow>{0}<white>.<newline>%prefix% Click <gold><bold><click:run_command:"/accepttrade {0}">HERE</click></bold> <white>to start the trade.'
@@ -35,6 +34,14 @@ item:
     waiting: '<green>Waiting for trading partner...'
     accept: '<green>Accept the trade!'
     complete: '<green>Closing the deal...'
+
+check:
+  matching-ip:
+    failed: '%prefix% You are currently <red>not <white>allowed to start a trade with this player. Please contact the server team if you think that this is an error.'
+  distance:
+    failed: '%prefix% You and <green>{0} <white>are too far apart.'
+  worlds:
+    failed: '%prefix% You and <green>{0} <white>are not in the same world.'
 
 trade-cancelled: '%prefix% The trade has been <red>cancelled<white>.'
 trade-cancelled-by-user: '%prefix% The trade has been <red>cancelled <white>by <green>{0}<white>.'

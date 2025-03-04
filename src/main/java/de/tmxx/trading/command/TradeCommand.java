@@ -2,6 +2,7 @@ package de.tmxx.trading.command;
 
 import com.google.inject.Inject;
 import de.tmxx.trading.module.plugin.MainConfig;
+import de.tmxx.trading.trade.TradeLicenseExaminer;
 import de.tmxx.trading.trade.TradingStatus;
 import de.tmxx.trading.user.User;
 import de.tmxx.trading.user.UserRegistry;
@@ -31,15 +32,22 @@ public class TradeCommand implements PluginCommand {
 
     private final UserRegistry userRegistry;
     private final TradingStatus tradingStatus;
+    private final TradeLicenseExaminer examiner;
 
     @Inject
-    TradeCommand(@MainConfig FileConfiguration config, UserRegistry userRegistry, TradingStatus tradingStatus) {
+    TradeCommand(
+            @MainConfig FileConfiguration config,
+            UserRegistry userRegistry,
+            TradingStatus tradingStatus,
+            TradeLicenseExaminer examiner
+    ) {
         name = config.getString("command.name", "trade");
         aliases.addAll(config.getStringList("command.aliases"));
 
         this.config = config;
         this.userRegistry = userRegistry;
         this.tradingStatus = tradingStatus;
+        this.examiner = examiner;
     }
 
     @Override
@@ -84,11 +92,7 @@ public class TradeCommand implements PluginCommand {
             return;
         }
 
-        boolean noTradingWithMatchingIp = config.getBoolean("no-trading-with-matching-ip", true);
-        if (noTradingWithMatchingIp && user.getIp().equalsIgnoreCase(target.getIp())) {
-            user.sendMessage("command.trade.no-trading-with-matching-ip");
-            return;
-        }
+        if (!examiner.check(user, target)) return;
 
         if (target.hasRequest(user)) {
             user.sendMessage("command.trade.already-invited");

@@ -4,7 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import de.tmxx.trading.trade.Trade;
 import de.tmxx.trading.trade.TradeFactory;
+import de.tmxx.trading.trade.TradeLicenseExaminer;
 import de.tmxx.trading.trade.TradingStatus;
+import de.tmxx.trading.trade.impl.TradeLicenseExaminerImpl;
 import de.tmxx.trading.trade.impl.TradingStatusImpl;
 import de.tmxx.trading.trade.inventory.TradeInventory;
 import de.tmxx.trading.trade.impl.TradeImpl;
@@ -25,6 +27,7 @@ public class TradeModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(TradingStatus.class).to(TradingStatusImpl.class);
+        bind(TradeLicenseExaminer.class).to(TradeLicenseExaminerImpl.class);
 
         install(new FactoryModuleBuilder()
                 .implement(Trade.class, TradeImpl.class)
