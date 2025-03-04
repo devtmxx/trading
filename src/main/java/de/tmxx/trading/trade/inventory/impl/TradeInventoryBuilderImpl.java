@@ -100,7 +100,7 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
         ItemStack itemStack = ItemStack.of(valueModifierMaterial(amount));
         itemStack.editMeta(meta -> {
             meta.displayName(user.translate("item.value-modifier.name", amount).decoration(TextDecoration.ITALIC, false));
-            meta.lore(user.translateLore("item.value-modifier.lore"));
+            meta.lore(user.translateLore("item.value-modifier.lore", amount));
         });
 
         return itemStack;

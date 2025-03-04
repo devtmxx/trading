@@ -21,8 +21,8 @@ inventory:
 
 item:
   value-modifier:
-    name: '<green>+{0} Münzen<dark_gray>/<red>-{0} Münzen'
-    lore: '%n<gray>Linksklick: <green>Hinzufügen%n<gray>Rechtsklick: <red>Entfernen'
+    name: '<gray>Linksklick: <green>+{0} Münzen'
+    lore: '<gray>Rechtsklick: <red>-{0} Münzen'
   value:
     name: '<yellow>{0} Münzen'
   status:
