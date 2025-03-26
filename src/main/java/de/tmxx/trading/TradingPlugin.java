@@ -20,8 +20,6 @@ public class TradingPlugin extends JavaPlugin {
     public static final int CONFIG_VERSION = 1;
     private static Injector unsafe;
 
-    private TradingCore core = null;
-
     @Override
     public void onEnable() {
         unsafe = Guice.createInjector(
@@ -32,16 +30,8 @@ public class TradingPlugin extends JavaPlugin {
                 new HelperModule()
         );
 
-        core = unsafe.getInstance(TradingCore.class);
+        TradingCore core = unsafe.getInstance(TradingCore.class);
         core.enable();
-    }
-
-    @Override
-    public void onDisable() {
-        // do nothing if the plugin has not been enabled correctly
-        if (core == null) return;
-
-        core.disable();
     }
 
     public static Injector unsafe() {

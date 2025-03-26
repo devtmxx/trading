@@ -154,9 +154,9 @@ public class TradeInventoryBuilderImpl implements TradeInventoryBuilder {
 
     private ItemStack getValueItem(int value) {
         ItemStack itemStack = createItem(Material.EMERALD, null, value != 0);
-        itemStack.editMeta(meta -> {
-            meta.displayName(user.translate("item.value.name", value).decoration(TextDecoration.ITALIC, false));
-        });
+        itemStack.editMeta(meta -> meta.displayName(
+                user.translate("item.value.name", value).decoration(TextDecoration.ITALIC, false)
+        ));
         return itemStack;
     }
 

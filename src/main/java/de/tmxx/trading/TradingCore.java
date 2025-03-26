@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.tmxx.trading.helper.CommandHelper;
 import de.tmxx.trading.helper.ListenerHelper;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Project: trading
@@ -27,9 +26,5 @@ public class TradingCore {
     public void enable() {
         listenerHelper.registerListeners();
         commandHelper.registerCommands();
-    }
-
-    public void disable() {
-
     }
 }
